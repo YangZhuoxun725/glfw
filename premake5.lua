@@ -3,8 +3,10 @@ project "GLFW"
 	language "C"
 	staticruntime "off"
 	warnings "off"
+
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
 	files
 	{
 		"include/GLFW/glfw3.h",
@@ -24,6 +26,7 @@ project "GLFW"
 		"src/null_monitor.c",
 		"src/null_window.c",
 	}
+
 	filter "system:linux"
 		pic "On"
 		systemversion "latest"
@@ -45,8 +48,10 @@ project "GLFW"
 		{
 			"_GLFW_X11"
 		}
+
 	filter "system:macosx"
 		pic "On"
+
 		files
 		{
 			"src/cocoa_init.m",
@@ -58,12 +63,15 @@ project "GLFW"
 			"src/posix_thread.c",
 			"src/posix_module.c"
 		}
+
 		defines
 		{
 			"_GLFW_COCOA"
 		}
+
 	filter "system:windows"
 		systemversion "latest"
+
 		files
 		{
 			"src/win32_init.c",
@@ -75,22 +83,28 @@ project "GLFW"
 			"src/win32_window.c",
 			"src/wgl_context.c"
 		}
+
 		defines 
 		{ 
 			"_GLFW_WIN32",
 			"_CRT_SECURE_NO_WARNINGS"
 		}
+
 	filter "configurations:Debug"
 		runtime "Debug"
 		symbols "on"
+
 	filter { "system:windows", "configurations:Debug-AS" }	
 		runtime "Debug"
 		symbols "on"
 		sanitize { "Address" }
-		flags { "NoRuntimeChecks", "NoIncrementalLink" }
+		runtimechecks "Off"
+		incrementallink "Off"
+
 	filter "configurations:Release"
 		runtime "Release"
 		optimize "speed"
+
     filter "configurations:Dist"
 		runtime "Release"
 		optimize "speed"
